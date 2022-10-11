@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            position: relative;
+            top: calc(50vh - 150px);
+            left: calc(100vh - 100px);
+            width: 200px;
+            height: 300px;
+            text-align: center;
+            vertical-align: center;
+        }
+
+        #text {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table border="1">
+        <tr>
+            <td colspan="4" id="text">0</td>
+        </tr>
+        <tr>
+            <td>C</td>
+            <td>/</td>
+            <td>*</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td rowspan="2">+</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td rowspan="2">=</td>
+        </tr>
+        <tr>
+            <td colspan="2">0</td>
+            <td>.</td>
+        </tr>
+    </table>
+    <script>
+        const text = document.getElementById('text')
+        const btns = document.querySelectorAll('td:not(#text)')
+
+        let reset = false
+        for (const btn of btns) {
+            btn.onclick = () => {
+                const btnText = btn.innerText
+                if (btnText === '=') {
+                    text.innerText = eval(text.innerText)
+                    reset = true
+                } else if (btnText === 'C' || btnText === 'c') {
+                    text.innerText = '0'
+                } else {
+                    if (text.innerText === '-' && isNaN(parseInt(btnText))) return
+                    // !reset => 不是改值， 判斷reset === false 
+                    if (text.innerText !== '0' && !reset) {
+                        text.innerText += btnText
+                    } else if (!['+', '*', '/'].includes(btnText) || reset) {
+                        text.innerText = btnText
+                        reset = false
+                    }
+                }
+            }
+        }
+
+        document.onkeydown = event => {
+            const btnText = event.key
+            if (btnText === 'Enter' || btnText === '=') {
+                text.innerText = eval(text.innerText)
+                reset = true
+            } else if (btnText === 'C' || btnText === 'c') {
+                text.innerText = '0'
+            } else {
+                if (text.innerText === '-' && isNaN(parseInt(btnText))) return
+                if (!['+', '*', '/', '-'].includes(btnText) && !btnText.match(/[0-9]/g)) return
+                if (text.innerText !== '0' && !reset) {
+                    text.innerText += btnText
+                } else if (!['+', '*', '/'].includes(btnText) || reset) {
+                    text.innerText = btnText
+                    reset = false
+                }
+            }
+        }
+
+
+
+    </script>
+</body>
+
+</html>
