@@ -76,7 +76,7 @@
         }
 
         tr td:not(#text):hover {
-            background: rgba(255, 75, 80, 0.5);
+            background: rgba(255, 75, 80);
             box-shadow: 0 0 10px rgba(255, 75, 80, 0.5),
                 0 0 15px rgba(255, 75, 80, 0.4),
                 0 0 20px rgba(255, 75, 80, 0.2);
@@ -137,7 +137,7 @@
                     text.innerText = '0'
                 } else {
                     if (text.innerText === '-' && isNaN(parseInt(btnText))) return
-                    // !reset => 不是改值， 判斷reset === false 
+                    // !reset => 判斷現在的reset === false 
                     if (text.innerText !== '0' && !reset) {
                         text.innerText += btnText
                     } else if (!['+', '*', '/'].includes(btnText) || reset) {
